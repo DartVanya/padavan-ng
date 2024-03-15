@@ -49,6 +49,8 @@ function initial(){
 		document.form.reboot_date_x_Sat.checked = getDateCheck(document.form.reboot_schedule.value, 6);
 		document.form.reboot_time_x_hour.value = getrebootTimeRange(document.form.reboot_schedule.value, 0);
 		document.form.reboot_time_x_min.value = getrebootTimeRange(document.form.reboot_schedule.value, 1);
+		document.form.reboot_time2_x_hour.value = getrebootTimeRange(document.form.reboot_schedule.value, 0);
+		document.form.reboot_time2_x_min.value = getrebootTimeRange(document.form.reboot_schedule.value, 1);
 		document.getElementById('reboot_schedule_enable_tr').style.display = "";
 		change_on();
 
@@ -210,11 +212,15 @@ function check_Timefield_checkbox(){	// To check Date checkbox checked or not an
 		|| document.form.reboot_date_x_Sat.checked == true	){
 			inputCtrl(document.form.reboot_time_x_hour,1);
 			inputCtrl(document.form.reboot_time_x_min,1);
+			inputCtrl(document.form.reboot_time2_x_hour,1);
+			inputCtrl(document.form.reboot_time2_x_min,1);
 			document.form.reboot_schedule.disabled = false;
 	}
 	else{
 			inputCtrl(document.form.reboot_time_x_hour,0);
 			inputCtrl(document.form.reboot_time_x_min,0);
+			inputCtrl(document.form.reboot_time2_x_hour,0);
+			inputCtrl(document.form.reboot_time2_x_min,0);
 			document.form.reboot_schedule.disabled = true;
 			document.getElementById('reboot_schedule_time_tr').style.display ="";
 			document.getElementById('reboot_schedule_time_tr2').style.display ="";
@@ -252,6 +258,8 @@ function updateDateTime()
 		document.form.reboot_schedule,
 		document.form.reboot_time_x_hour,
 		document.form.reboot_time_x_min);
+		document.form.reboot_time2_x_hour,
+		document.form.reboot_time2_x_min);
 	}
 	else
 		document.form.reboot_schedule_enable.value = "0";
@@ -555,8 +563,8 @@ function updateDateTime()
                                         <tr id="reboot_schedule_time_tr2">
                                         <th style="border-top: 0 none;"><#Reboot_Schedule_Time2#></th>
                                             <td style="border-top: 0 none;">
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="reboot_time_x_hour" onKeyPress="return validator.isNumber(this,event);" onblur="validator.timeRange(this, 0);" autocorrect="off" autocapitalize="off"><#Hour#>:
-                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="reboot_time_x_min" onKeyPress="return validator.isNumber(this,event);" onblur="validator.timeRange(this, 1);" autocorrect="off" autocapitalize="off"><#Minute#>
+                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="reboot_time2_x_hour" onKeyPress="return validator.isNumber(this,event);" onblur="validator.timeRange(this, 0);" autocorrect="off" autocapitalize="off"><#Hour#>:
+                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="reboot_time2_x_min" onKeyPress="return validator.isNumber(this,event);" onblur="validator.timeRange(this, 1);" autocorrect="off" autocapitalize="off"><#Minute#>
                                             </td>
                                         </tr>
                                         <tr>
