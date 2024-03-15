@@ -56,8 +56,9 @@ function initial(){
 	else{
 		document.getElementById('reboot_schedule_enable_tr').style.display = "none";
 		document.getElementById('reboot_schedule_date_tr').style.display = "none";
-		document.getElementById('reboot_schedule_date_tr2').style.display = "none";
 		document.getElementById('reboot_schedule_time_tr').style.display = "none";
+		document.getElementById('reboot_schedule_date_tr2').style.display = "none";
+		document.getElementById('reboot_schedule_time_tr2').style.display = "none";
 	}
 
 	if(document.form.computer_name2.value != "")
@@ -102,8 +103,9 @@ function applyRule(){
 function change_on(){
 var v = document.form.reboot_schedule_enable_x.value;
 	showhide_div('reboot_schedule_date_tr', v);
-	showhide_div('reboot_schedule_date_tr2', v);
 	showhide_div('reboot_schedule_time_tr', v);
+	showhide_div('reboot_schedule_date_tr2', v);
+	showhide_div('reboot_schedule_time_tr2', v);
 	if ( v == 1 )
 		check_Timefield_checkbox();
 
@@ -188,7 +190,7 @@ function blanktest(obj, flag){
 
 function openLink(s) {
 	var link_params = "toolbar=yes,location=yes,directories=no,status=yes,menubar=yes,scrollbars=yes,resizable=yes,copyhistory=no,width=640,height=480";
-	var tourl = "http://support.ntp.org/bin/view/Servers/WebHome";
+	var tourl = "https://support.ntp.org/bin/view/Servers/WebHome";
 	link = window.open(tourl, "NTPLink", link_params);
 	if (!link.opener) link.opener = self;
 }
@@ -215,6 +217,7 @@ function check_Timefield_checkbox(){	// To check Date checkbox checked or not an
 			inputCtrl(document.form.reboot_time_x_min,0);
 			document.form.reboot_schedule.disabled = true;
 			document.getElementById('reboot_schedule_time_tr').style.display ="";
+			document.getElementById('reboot_schedule_time_tr2').style.display ="";
 	}
 }
 
@@ -533,6 +536,13 @@ function updateDateTime()
                                                 </div>
                                             </td>
                                         </tr>
+                                        <tr id="reboot_schedule_time_tr">
+                                        <th style="border-top: 0 none;"><#Reboot_Schedule_Time#></th>
+                                            <td style="border-top: 0 none;">
+                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="reboot_time_x_hour" onKeyPress="return validator.isNumber(this,event);" onblur="validator.timeRange(this, 0);" autocorrect="off" autocapitalize="off"><#Hour#>:
+                                                <input type="text" maxlength="2" style="width: 20px;" size="2" name="reboot_time_x_min" onKeyPress="return validator.isNumber(this,event);" onblur="validator.timeRange(this, 1);" autocorrect="off" autocapitalize="off"><#Minute#>
+                                            </td>
+                                        </tr>
                                         <tr id="reboot_schedule_date_tr2">
                                             <th><#Reboot_Schedule_Date2#></th>
                                             <td>
@@ -542,8 +552,8 @@ function updateDateTime()
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr id="reboot_schedule_time_tr">
-                                        <th style="border-top: 0 none;"><#Reboot_Schedule_Time#></th>
+                                        <tr id="reboot_schedule_time_tr2">
+                                        <th style="border-top: 0 none;"><#Reboot_Schedule_Time2#></th>
                                             <td style="border-top: 0 none;">
                                                 <input type="text" maxlength="2" style="width: 20px;" size="2" name="reboot_time_x_hour" onKeyPress="return validator.isNumber(this,event);" onblur="validator.timeRange(this, 0);" autocorrect="off" autocapitalize="off"><#Hour#>:
                                                 <input type="text" maxlength="2" style="width: 20px;" size="2" name="reboot_time_x_min" onKeyPress="return validator.isNumber(this,event);" onblur="validator.timeRange(this, 1);" autocorrect="off" autocapitalize="off"><#Minute#>
