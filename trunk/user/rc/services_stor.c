@@ -159,7 +159,8 @@ write_vsftpd_conf(void)
 
 	fprintf(fp, "max_clients=%d\n", i_maxuser);
 	fprintf(fp, "max_per_ip=%d\n", i_maxuser);
-	fprintf(fp, "ftpd_banner=Welcome to %s FTP service.\n", nvram_safe_get("productid"));
+	// fprintf(fp, "ftpd_banner=Welcome to %s FTP service.\n", nvram_safe_get("productid"));
+	fprintf(fp, "ftpd_banner=Welcome to %s FTP service.\n", "DV-Drive");
 
 	fclose(fp);
 }
@@ -845,7 +846,8 @@ void update_minidlna_conf(const char *link_path, const char *conf_path)
 		fprintf(fp, "root_container=%s\n", "P");
 	if (nvram_get_int("dlna_sort") > 0)
 		fprintf(fp, "force_sort_criteria=%s\n", "+upnp:class,+upnp:originalTrackNumber,+dc:title");
-	fprintf(fp, "friendly_name=%s\n", computer_name);
+	// fprintf(fp, "friendly_name=%s\n", computer_name);
+	fprintf(fp, "friendly_name=%s\n", "DV-Drive");
 	fprintf(fp, "db_dir=%s\n", link_path);
 	fprintf(fp, "log_dir=%s\n", link_path);
 	fprintf(fp, "album_art_names=%s\n", "Cover.jpg/cover.jpg/AlbumArtSmall.jpg/albumartsmall.jpg/AlbumArt.jpg/albumart.jpg/Album.jpg/album.jpg/Folder.jpg/folder.jpg/Thumb.jpg/thumb.jpg");
