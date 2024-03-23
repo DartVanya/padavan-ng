@@ -450,7 +450,7 @@ start_dns_dhcpd(int is_ap_mode)
 #if defined(APP_VLMCSD)
 		int vlmcsd_mode = nvram_get_int("vlmcsd_enable");
 		if ( vlmcsd_mode == 1)	
-			fprintf(fp, "srv-host=%s.%s,%s,%d\n", "_VLMCS", "_tcp", gw, 1688);
+			fprintf(fp, "srv-host=%s.%s,%s,%d\n", "_VLMCS", "_tcp", ipaddr, 1688);
 #endif
 		if (i_verbose == 0 || i_verbose == 2)
 			fprintf(fp, "quiet-dhcp\n");
