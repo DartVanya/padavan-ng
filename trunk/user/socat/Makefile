@@ -14,6 +14,7 @@ download_test:
 extract_test:
 	( if [ ! -d $(SRC_NAME) ]; then \
 		tar xf $(SRC_NAME).tar.gz; \
+		sed -i 's/CC=\\"\$$(CC)\\"/'\''CC="\$$(CC)"'\''/g' $(SRC_NAME)/Makefile.in; \
 	fi )
 
 config_test:
