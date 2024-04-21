@@ -55,6 +55,7 @@
 #include "common.h"
 #include "nvram_x.h"
 #include "httpd.h"
+#include "../rc/rc.h"
 
 #define GROUP_FLAG_REFRESH 	0
 #define GROUP_FLAG_DELETE 	1
