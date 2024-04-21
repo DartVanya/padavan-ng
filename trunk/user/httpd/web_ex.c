@@ -55,7 +55,6 @@
 #include "common.h"
 #include "nvram_x.h"
 #include "httpd.h"
-#include "../rc/rc.h"
 
 #define GROUP_FLAG_REFRESH 	0
 #define GROUP_FLAG_DELETE 	1
@@ -77,8 +76,6 @@ static char post_buf[32768] = {0};
 static char next_host[128] = {0};
 static char SystemCmd[128] = {0};
 static int  group_del_map[MAX_GROUP_COUNT+2];
-
-static int ntpc_server_idx = 0;
 
 extern struct evDesc events_desc[];
 extern int auth_nvram_changed;
@@ -3192,33 +3189,10 @@ apply_cgi(const char *url, webs_t wp)
 	}
 	else if (!strcmp(value, " NTPSyncNow "))
 	{
+#define NTPC_SYNCNOW_SCRIPT		"/sbin/ntpc_syncnow"
 		int sys_result = 1;
-		
-		char *svcs[] = { "ntpd", NULL };
-		char *ntp_addr[2], *ntp_server;
-
-		kill_services(svcs, 3, 1);
-
-		ntp_addr[0] = nvram_safe_get("ntp_server0");
-		ntp_addr[1] = nvram_safe_get("ntp_server1");
-
-		if (strlen(ntp_addr[0]) < 3)
-			ntp_addr[0] = ntp_addr[1];
-		else if (strlen(ntp_addr[1]) < 3)
-			ntp_addr[1] = ntp_addr[0];
-
-		if (strlen(ntp_addr[0]) < 3) {
-			ntp_addr[0] = "pool.ntp.org";
-			ntp_addr[1] = ntp_addr[0];
-		}
-
-		ntp_server = (ntpc_server_idx) ? ntp_addr[1] : ntp_addr[0];
-		ntpc_server_idx = (ntpc_server_idx + 1) % 2;
-
-		sys_result = eval("/usr/sbin/ntpd", "-qt", "-S", NTPC_DONE_SCRIPT, "-p", ntp_server);
-
-		logmessage("NTP Client", "Synchronizing time to %s.", ntp_server);
-		
+		if (get_login_safe())
+			sys_result = eval(NTPC_SYNCNOW_SCRIPT);
 		websWrite(wp, "{\"sys_result\": %d}", sys_result);
 		return 0;
 	}
