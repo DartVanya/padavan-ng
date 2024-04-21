@@ -77,6 +77,8 @@ static char next_host[128] = {0};
 static char SystemCmd[128] = {0};
 static int  group_del_map[MAX_GROUP_COUNT+2];
 
+static int ntpc_server_idx = 0;
+
 extern struct evDesc events_desc[];
 extern int auth_nvram_changed;
 #if defined (SUPPORT_HTTPS)
@@ -3184,6 +3186,38 @@ apply_cgi(const char *url, webs_t wp)
 		if (get_login_safe())
 			sys_result = !stat(STORAGE_HTTPSSL_DIR "/server.crt", &stat_buf) && !stat(STORAGE_HTTPSSL_DIR "/server.key", &stat_buf) ? 1 : 0;
 #endif
+		websWrite(wp, "{\"sys_result\": %d}", sys_result);
+		return 0;
+	}
+	else if (!strcmp(value, " NTPSyncNow "))
+	{
+		int sys_result = 1;
+		
+		char *svcs[] = { "ntpd", NULL };
+		char *ntp_addr[2], *ntp_server;
+
+		kill_services(svcs, 3, 1);
+
+		ntp_addr[0] = nvram_safe_get("ntp_server0");
+		ntp_addr[1] = nvram_safe_get("ntp_server1");
+
+		if (strlen(ntp_addr[0]) < 3)
+			ntp_addr[0] = ntp_addr[1];
+		else if (strlen(ntp_addr[1]) < 3)
+			ntp_addr[1] = ntp_addr[0];
+
+		if (strlen(ntp_addr[0]) < 3) {
+			ntp_addr[0] = "pool.ntp.org";
+			ntp_addr[1] = ntp_addr[0];
+		}
+
+		ntp_server = (ntpc_server_idx) ? ntp_addr[1] : ntp_addr[0];
+		ntpc_server_idx = (ntpc_server_idx + 1) % 2;
+
+		sys_result = eval("/usr/sbin/ntpd", "-qt", "-S", NTPC_DONE_SCRIPT, "-p", ntp_server);
+
+		logmessage("NTP Client", "Synchronizing time to %s.", ntp_server);
+		
 		websWrite(wp, "{\"sys_result\": %d}", sys_result);
 		return 0;
 	}
