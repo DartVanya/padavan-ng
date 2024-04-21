@@ -1081,7 +1081,7 @@ ntpc_updated_main(int argc, char *argv[])
 int
 ntpc_syncnow_main(int argc, char *argv[])
 {
-	return refresh_ntp(argc, argv);
+	return refresh_ntp();
 }
 
 static void
